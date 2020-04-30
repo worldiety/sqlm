@@ -112,3 +112,26 @@ func main() {
 ```bash
 go generate ./...
 ```
+
+invoke the migration in your app
+```go
+package main
+
+import (
+    "github.com/worldiety/myapp/service/user/repository/postgresql"
+    "database/sql"
+    "github.com/worldiety/sqlm"
+    _ "github.com/go-sql-driver/mysql"
+)
+
+
+func main(){
+    db, err := sql.Open("postgres", "...")
+    if err != nil {
+        panic(err)
+    }
+    sqlm.MustMigrate(db, postgresql.Migrations...)
+}
+
+
+```
